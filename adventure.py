@@ -1,7 +1,7 @@
 """
     Saul Toribio
-    2/5/25
-    CSE012 Spring 2024: Week 3 Coding Assignment
+    2/13/25
+    CSE012 Spring 2024: Week 4 Coding Assignment
     IDE: VSCode; Python: 3.12.7
 """
 
@@ -116,76 +116,58 @@ def check_for_treasure(has_treasure):
         print("The monster did not have the treasure. You continue your journey.")
 
 def acquire_item(inventory, item):
-    print(f"You acquired a {item}!")
+    print(f"You acquired a {item}!\n")
     inventory.append(item)
     return inventory
 
 def display_inventory(inventory):
-    if len(inventory) != 0:
+    if inventory:
         print("Your inventory:\n")
-        i = 1
-
-        for item in inventory:
+        for i, item in enumerate(inventory, 1):
             print(f"{i}. {item}\n")
-            i += 1
     else:
         print("Your inventory is empty.\n")
 
 def enter_dungeon(player_health, inventory, dungeon_rooms):
     for room in dungeon_rooms:
-        print(f"{room[0]}\n")
+        room_description, item, challenge_type, challenge_outcome = room
+        print(f"{room_description}\n")
 
-        if room[1] != None:
-            acquire_item(inventory, room[1])
-        
-        match room[2]:
+        if item:
+            acquire_item(inventory, item)
+
+        match challenge_type:
             case "puzzle":
                 print("You encounter a puzzle!\n")
 
                 user_input = input()
-                if user_input.lower == "solve":
-                    random_choice = random.choice([True, False])
-                    if random_choice == True:
-                        print(room[3][0]  + "\n")
-                    else:
-                        print(room[3][1] + "\n")
-                        player_health -= room[3][0]
-                else:
-                    print(room[3][1] + "\n")
-                    player_health -= room[3][0]
+                if user_input == "solve":
+                    success = random.choice([True, False])
+                    print(challenge_outcome[0] if success else challenge_outcome[1])
+
+                    if not success:
+                        player_health += challenge_outcome[2]
             case "trap":
                 print("You see a potential trap!\n")
 
                 user_input = input()
-                if user_input.lower == "disarm":
-                    random_choice = random.choice([True, False])
-                    if random_choice == True:
-                        print(room[3][0]  + "\n")
-                    else:
-                        print(room[3][1] + "\n")
-                        player_health -= room[3][0]
-                else:
-                    print(room[3][1] + "\n")
-                    player_health -= room[3][0]
-            case "treasure":
-                user_input = input()
-                if user_input.lower == "pick":
-                    random_choice = random.choice([True, False])
-                    if random_choice == True:
-                        print(room[3][0]  + "\n")
-                    else:
-                        print(room[3][1] + "\n")
-                        player_health -= room[3][0]
-                else:
-                    print(room[3][1] + "\n")
-                    player_health -= room[3][0]
-            case _:
-                print("There doesn't seem to be a challenge in this room. You move on.\n")
-        
-        display_inventory(inventory)
-    
-    display_player_status(player_health)
+                if user_input == "disarm":
+                    success = random.choice([True, False])
+                    print(challenge_outcome[0] if success else challenge_outcome[1])
 
+                    if not success:
+                        player_health += challenge_outcome[2]
+            case "none":
+                print("There doesn't seem to be a challenge in this room. You move on.\n")
+
+        if player_health <= 0:
+            player_health = 0
+            print("You are barely alive!\n")
+
+        display_inventory(inventory)
+
+    display_player_status(player_health)
+    return player_health, inventory
 
 def main():
     """
