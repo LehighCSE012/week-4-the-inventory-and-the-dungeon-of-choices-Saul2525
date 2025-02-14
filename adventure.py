@@ -121,12 +121,9 @@ def acquire_item(inventory, item):
     return inventory
 
 def display_inventory(inventory):
-    if inventory:
-        print("Your inventory:\n")
-        for i, item in enumerate(inventory, 1):
-            print(f"{i}. {item}\n")
-    else:
-        print("Your inventory is empty.\n")
+    print("Your inventory:")
+    for i, item in enumerate(inventory, start=1):
+        print(f"{i}. {item}")
 
 def enter_dungeon(player_health, inventory, dungeon_rooms):
     for room in dungeon_rooms:
@@ -180,7 +177,7 @@ def main():
     inventory = []
     dungeon_rooms = [
         ("A puzzle chamber", None, "puzzle", ("Puzzle solved!", "Puzzle failed!", -10)),
-        ("A narrow passage with a creaky floor", "rope", "trap", ("You skillfully avoid the trap!", "You triggered a trap!", -10)),
+        ("A narrow passage with a creaky floor", None, "trap", ("You skillfully avoid the trap!", "You triggered a trap!", -10)),
         ("A grand hall with a shimmering pool", "healing potion", "none", None),
         ("A small room with a locked chest", "treasure", "puzzle", ("You cracked the code!", "The chest remains stubbornly locked.", -5))
     ]
