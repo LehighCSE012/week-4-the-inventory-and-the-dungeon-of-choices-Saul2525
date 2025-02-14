@@ -120,7 +120,7 @@ def acquire_item(inventory, item):
         Adds a item to the user's inventory.
     """
     print(f"You found a {item} in the room.\n")
-    inventory.append(item)
+    inventory.append(item) # Use append() to add item to the inventory
     return inventory
 
 def display_inventory(inventory):
@@ -145,26 +145,28 @@ def enter_dungeon(player_health, inventory, dungeon_rooms):
         if item:
             inventory = acquire_item(inventory, item)
 
-        if challenge_type == "puzzle":
-            print("You encounter a puzzle!")
-            user_input = input("")
-            if user_input == "solve":
-                success = random.choice([True, False])
-                print(challenge_outcome[0] if success else challenge_outcome[1])
-                player_health += challenge_outcome[2]
+        match (challenge_type):
+            case "puzzle":
+                print("You encounter a puzzle!")
+                user_input = input("")
 
-        elif challenge_type == "trap":
-            print("You see a potential trap!")
-            user_input = input("")
-            if user_input == "disarm":
-                success = random.choice([True, False])
-                print(challenge_outcome[0] if success else challenge_outcome[1])
-                if not success:
+                if user_input == "solve":
+                    success = random.choice([True, False])
+                    print(challenge_outcome[0] if success else challenge_outcome[1])
                     player_health += challenge_outcome[2]
+            case "trap":
+                print("You see a potential trap!")
+                user_input = input("")
 
-        else:
-            print("You acquired a gold coins!")
-            print("There doesn't seem to be a challenge in this room. You move on.")
+                if user_input == "disarm":
+                    success = random.choice([True, False])
+                    print(challenge_outcome[0] if success else challenge_outcome[1])
+
+                    if not success:
+                        player_health += challenge_outcome[2]
+            case _:
+                print("You acquired a gold coins!")
+                print("There doesn't seem to be a challenge in this room. You move on.")
 
         if player_health <= 0:
             print("You are barely alive!")
