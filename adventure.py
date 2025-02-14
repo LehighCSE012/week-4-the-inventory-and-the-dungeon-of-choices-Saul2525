@@ -137,16 +137,17 @@ def enter_dungeon(player_health, inventory, dungeon_rooms):
             inventory = acquire_item(inventory, item)
         
         if challenge_type == "puzzle":
-            print("You encounter a puzzle!\n")
+            print("You encounter a puzzle!")
             user_input = input()
             if user_input == "solve":
-                result_message, fail_message, health_penalty = challenge_outcome
-                print(result_message if success else fail_message)
-                player_health -= abs(health_penalty)
-
+                success = random.choice([True, False])
+                print(challenge_outcome[0] if success else challenge_outcome[1])
+                if not success:
+                    player_health -= abs(challenge_outcome[2])
+        
         elif challenge_type == "trap":
             print("You see a potential trap!")
-            user_input = input("")
+            user_input = input()
             if user_input == "disarm":
                 success = random.choice([True, False])
                 print(challenge_outcome[0] if success else challenge_outcome[1])
@@ -154,6 +155,7 @@ def enter_dungeon(player_health, inventory, dungeon_rooms):
                     player_health -= abs(challenge_outcome[2])
         
         else:
+            print("You acquired a gold coins!")
             print("There doesn't seem to be a challenge in this room. You move on.")
         
         if player_health <= 0:
@@ -176,9 +178,11 @@ def main():
     inventory = []
     dungeon_rooms = [
         ("A puzzle chamber", None, "puzzle", ("Puzzle solved!", "Puzzle failed!", -10)),
-        ("A narrow passage with a creaky floor", None, "trap", ("You skillfully avoid the trap!", "You triggered a trap!", -10)),
+        ("A narrow passage with a creaky floor", None, "trap", ("You skillfully avoid the trap!",
+                                                                "You triggered a trap!", -10)),
         ("A treasure room", "gold coins", "none", None),
-        ("A small room with a locked chest", "treasure", "puzzle", ("You cracked the code!", "The chest remains stubbornly locked.", -5))
+        ("A small room with a locked chest", "treasure", "puzzle", ("You cracked the code!",
+                                                    "The chest remains stubbornly locked.", -5))
     ]
 
     player_health_initial = handle_path_choice(player_health_initial)
