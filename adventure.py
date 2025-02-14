@@ -116,11 +116,17 @@ def check_for_treasure(has_treasure):
         print("The monster did not have the treasure. You continue your journey.")
 
 def acquire_item(inventory, item):
+    """
+        Adds a item to the user's inventory.
+    """
     print(f"You found a {item} in the room.\n")
     inventory.append(item)
     return inventory
 
 def display_inventory(inventory):
+    """
+        Displays the user's inventory.
+    """
     if not inventory:
         print("Your inventory is empty.")
     else:
@@ -129,13 +135,16 @@ def display_inventory(inventory):
             print(f"{i}. {item}")
 
 def enter_dungeon(player_health, inventory, dungeon_rooms):
+    """
+        Handles the dungeon encounter.
+    """
     for room in dungeon_rooms:
         room_description, item, challenge_type, challenge_outcome = room
         print(f"\n{room_description}")
-        
+
         if item:
             inventory = acquire_item(inventory, item)
-        
+
         if challenge_type == "puzzle":
             print("You encounter a puzzle!")
             user_input = input()
@@ -144,7 +153,7 @@ def enter_dungeon(player_health, inventory, dungeon_rooms):
                 print(challenge_outcome[0] if success else challenge_outcome[1])
                 if not success:
                     player_health -= abs(challenge_outcome[2])
-        
+
         elif challenge_type == "trap":
             print("You see a potential trap!")
             user_input = input()
@@ -153,17 +162,17 @@ def enter_dungeon(player_health, inventory, dungeon_rooms):
                 print(challenge_outcome[0] if success else challenge_outcome[1])
                 if not success:
                     player_health -= abs(challenge_outcome[2])
-        
+
         else:
             print("You acquired a gold coins!")
             print("There doesn't seem to be a challenge in this room. You move on.")
-        
+
         if player_health <= 0:
             print("You are barely alive!")
             player_health = 0
-        
+
         display_inventory(inventory)
-    
+
     print(f"\nYou exit the dungeon with {player_health} health remaining.")
     return player_health, inventory
 
