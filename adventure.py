@@ -179,9 +179,9 @@ def main():
 
     inventory = []
     dungeon_rooms = [
-        ("A puzzle chamber", "gold coins", "puzzle", ("Puzzle solved!", "Puzzle failed!", -10)),
+        ("A puzzle chamber", None, "puzzle", ("Puzzle solved!", "Puzzle failed!", -10)),
         ("A narrow passage with a creaky floor", None, "trap", ("You skillfully avoid the trap!", "You triggered a trap!", -10)),
-        ("A grand hall with a shimmering pool", "healing potion", "none", None),
+        ("A treasure room", "gold coins", "none", None),
         ("A small room with a locked chest", "treasure", "puzzle", ("You cracked the code!", "The chest remains stubbornly locked.", -5))
     ]
 
