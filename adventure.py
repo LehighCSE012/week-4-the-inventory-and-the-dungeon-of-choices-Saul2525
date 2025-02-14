@@ -121,9 +121,12 @@ def acquire_item(inventory, item):
     return inventory
 
 def display_inventory(inventory):
-    print("Your inventory:")
-    for i, item in enumerate(inventory, start=1):
-        print(f"{i}. {item}")
+    if inventory:
+        print("Your inventory:")
+        for i, item in enumerate(inventory, start=1):
+            print(f"{i}. {item}")
+    else:
+        print("Your inventory is empty.")
 
 def enter_dungeon(player_health, inventory, dungeon_rooms):
     for room in dungeon_rooms:
