@@ -116,7 +116,7 @@ def check_for_treasure(has_treasure):
         print("The monster did not have the treasure. You continue your journey.")
 
 def acquire_item(inventory, item):
-    print(f"You acquired a {item} in the room.\n")
+    print(f"You found a {item} in the room.\n")
     inventory.append(item)
     return inventory
 
