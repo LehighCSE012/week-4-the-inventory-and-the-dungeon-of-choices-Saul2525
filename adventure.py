@@ -121,52 +121,49 @@ def acquire_item(inventory, item):
     return inventory
 
 def display_inventory(inventory):
-    if inventory:
-        print("Your inventory:")
-        for i, item in enumerate(inventory, start=1):
-            print(f"{i}. {item}")
-    else:
+    if not inventory:
         print("Your inventory is empty.")
+    else:
+        print("Your inventory:")
+        for i, item in enumerate(inventory, 1):
+            print(f"{i}. {item}")
 
 def enter_dungeon(player_health, inventory, dungeon_rooms):
     for room in dungeon_rooms:
         room_description, item, challenge_type, challenge_outcome = room
-        print(f"{room_description}\n")
-
+        print(f"\n{room_description}")
+        
         if item:
-            acquire_item(inventory, item)
-
-        match challenge_type:
-            case "puzzle":
-                print("You encounter a puzzle!\n")
-                user_input = input().strip().lower()
-
-                if user_input == "solve":
-                    success = random.choice([True, False])
-                    print(challenge_outcome[0] if success else challenge_outcome[1])
-
-                    if not success:
-                        player_health -= abs(challenge_outcome[2])
-            case "trap":
-                print("You see a potential trap!\n")
-                user_input = input().strip().lower()
-
-                if user_input == "disarm":
-                    success = random.choice([True, False])
-                    print(challenge_outcome[0] if success else challenge_outcome[1])
-
-                    if not success:
-                        player_health -= abs(challenge_outcome[2])
-            case _:
-                print("There doesn't seem to be a challenge in this room. You move on.\n")
-
+            inventory = acquire_item(inventory, item)
+        
+        if challenge_type == "puzzle":
+            print("You encounter a puzzle!")
+            user_input = input("Type 'solve' to attempt solving the puzzle or 'skip' to move on: ").strip().lower()
+            if user_input == "solve":
+                success = random.choice([True, False])
+                print(challenge_outcome[0] if success else challenge_outcome[1])
+                if not success:
+                    player_health -= abs(challenge_outcome[2])
+        
+        elif challenge_type == "trap":
+            print("You see a potential trap!")
+            user_input = input("Type 'disarm' to attempt disarming the trap or 'bypass' to move on: ").strip().lower()
+            if user_input == "disarm":
+                success = random.choice([True, False])
+                print(challenge_outcome[0] if success else challenge_outcome[1])
+                if not success:
+                    player_health -= abs(challenge_outcome[2])
+        
+        else:
+            print("There doesn't seem to be a challenge in this room. You move on.")
+        
         if player_health <= 0:
+            print("You are barely alive!")
             player_health = 0
-            print("You are barely alive!\n")
-
+        
         display_inventory(inventory)
-
-    display_player_status(player_health)
+    
+    print(f"\nYou exit the dungeon with {player_health} health remaining.")
     return player_health, inventory
 
 def main():
