@@ -157,7 +157,7 @@ def enter_dungeon(player_health, inventory, dungeon_rooms):
 
                     if not success:
                         player_health -= abs(challenge_outcome[2])
-            case "none":
+            case _:
                 print("There doesn't seem to be a challenge in this room. You move on.\n")
 
         if player_health <= 0:
