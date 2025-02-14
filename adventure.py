@@ -147,7 +147,7 @@ def enter_dungeon(player_health, inventory, dungeon_rooms):
 
         if challenge_type == "puzzle":
             print("You encounter a puzzle!")
-            user_input = input()
+            user_input = input("")
             if user_input == "solve":
                 success = random.choice([True, False])
                 print(challenge_outcome[0] if success else challenge_outcome[1])
@@ -156,7 +156,7 @@ def enter_dungeon(player_health, inventory, dungeon_rooms):
 
         elif challenge_type == "trap":
             print("You see a potential trap!")
-            user_input = input()
+            user_input = input("")
             if user_input == "disarm":
                 success = random.choice([True, False])
                 print(challenge_outcome[0] if success else challenge_outcome[1])
