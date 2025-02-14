@@ -9,22 +9,13 @@ import random
 
 def display_player_status(player_health):
     """
-        Displays the player's current health.
-
-        Args:
-            player_health (int): The player's current health.
+    Displays the player's current health.
     """
     print(f"Your current health: {player_health}\n")
 
 def handle_path_choice(player_health):
     """
-        Randomly chooses a path for the player to walk down. Either a good or bad thing happens.
-
-        Args:
-            player_health (int): The player's current health.
-
-        Returns:
-            int: The updated player health after the path event.
+    Randomly chooses a path for the player to walk down.
     """
     path = random.choice(["left", "right"])
     if path == "left":
@@ -45,13 +36,7 @@ def handle_path_choice(player_health):
 
 def player_attack(monster_health):
     """
-        Handles a player attacking a monster.
-
-        Args:
-            monster_health (int): The monster's current health.
-
-        Returns:
-            int: The updated monster health after the player attacks.
+    Handles a player attacking a monster.
     """
     print("You strike the monster for 15 damage!\n")
     monster_health -= 15
@@ -59,13 +44,7 @@ def player_attack(monster_health):
 
 def monster_attack(player_health):
     """
-        Handles a monster attacking a player, with a chance of hitting a crit.
-
-        Args:
-            player_health (int): The player's current health.
-
-        Returns:
-            int: The updated player health after the monster attacks.
+    Handles a monster attacking a player, with a chance of hitting a crit.
     """
     if player_health > 0:
         if random.random() < 0.5:
@@ -78,15 +57,7 @@ def monster_attack(player_health):
 
 def combat_encounter(player_health, monster_health, has_treasure):
     """
-        Handles the player and monster fight.
-
-        Args:
-            player_health (int): The player's current health.
-            monster_health (int): The monster's current health.
-            has_treasure (bool): The monster either has or doesn't have treasure.
-
-        Returns:
-            bool: True if the monster had treasure, False otherwise.
+    Handles the player and monster fight.
     """
     while True:
         monster_health = player_attack(monster_health)
@@ -105,10 +76,7 @@ def combat_encounter(player_health, monster_health, has_treasure):
 
 def check_for_treasure(has_treasure):
     """
-        Checks if has_treasure is True or False.
-
-        Args:
-            has_treasure (bool): The monster either has or doesn't have treasure.
+    Checks if the monster had treasure.
     """
     if has_treasure:
         print("You found the hidden treasure! You win!")
@@ -155,7 +123,7 @@ def enter_dungeon(player_health, inventory, dungeon_rooms):
                     player_health -= abs(challenge_outcome[2])
         
         else:
-            print("You acquired a gold coins!")
+            print("You acquired gold coins!")
             print("There doesn't seem to be a challenge in this room. You move on.")
         
         if player_health <= 0:
@@ -169,7 +137,7 @@ def enter_dungeon(player_health, inventory, dungeon_rooms):
 
 def main():
     """
-        The main function for the rest of the program.
+    The main function for the rest of the program.
     """
     player_health_initial = 100
     monster_health_initial = 75
