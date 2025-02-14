@@ -137,17 +137,16 @@ def enter_dungeon(player_health, inventory, dungeon_rooms):
             inventory = acquire_item(inventory, item)
         
         if challenge_type == "puzzle":
-            print("You encounter a puzzle!")
-            user_input = input("Type 'solve' to attempt solving the puzzle or 'skip' to move on: ").strip().lower()
+            print("You encounter a puzzle!\n")
+            user_input = input()
             if user_input == "solve":
-                success = random.choice([True, False])
-                print(challenge_outcome[0] if success else challenge_outcome[1])
-                if not success:
-                    player_health -= abs(challenge_outcome[2])
-        
+                result_message, fail_message, health_penalty = challenge_outcome
+                print(result_message if success else fail_message)
+                player_health -= abs(health_penalty)
+
         elif challenge_type == "trap":
             print("You see a potential trap!")
-            user_input = input("Type 'disarm' to attempt disarming the trap or 'bypass' to move on: ").strip().lower()
+            user_input = input("")
             if user_input == "disarm":
                 success = random.choice([True, False])
                 print(challenge_outcome[0] if success else challenge_outcome[1])
