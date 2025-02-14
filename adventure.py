@@ -145,6 +145,12 @@ def enter_dungeon(player_health, inventory, dungeon_rooms):
         if item:
             inventory = acquire_item(inventory, item)
 
+        # Demonstrate tuple immutability
+        # try:
+        #     room[1] = "A ballroom"
+        # except TypeError as error:
+        #     print("tuples are immutable!")
+
         match (challenge_type):
             case "puzzle":
                 print("You encounter a puzzle!")
@@ -171,6 +177,14 @@ def enter_dungeon(player_health, inventory, dungeon_rooms):
         if player_health <= 0:
             print("You are barely alive!")
             player_health = 0
+
+        # Use list concatenation (+) to extend inventory with additional items
+        # inventory += ["gold bar", "gold nugget"]
+
+        # Use remove() to remove an item
+        #if "gold coins" in inventory:
+        #    inventory.remove("gold coins")
+        #    print("You used your gold coins.")
 
         display_inventory(inventory)
 
